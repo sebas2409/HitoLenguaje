@@ -22,6 +22,8 @@ function calificaciones(nota) {
         return "Suficiente"
     }else if (nota < 5){
         return "Insuficiente"
+    }else{
+        return "No se puede calificar"
     }
 
 }
@@ -34,38 +36,43 @@ function calcularMedia(array) {
     return (media/array.length).toFixed(2)
 }
 
+
 function mostrarAlumnos(json) {
     let select = document.getElementById('cuerpoTabla');
-    
-    for (const selectKey in json) {
-        for (let i = 0; i <json[selectKey].length ; i++) {
-            
-            let fila = document.createElement("tr")
-            let nota = json[selectKey][i]["notas"]
-            let arrayNotas = [nota[0]["nota"],nota[1]["nota"],nota[2]["nota"],nota[3]["nota"],nota[4]["nota"],nota[5]["nota"]]
-            
-            fila.innerHTML = "<td>" + json[selectKey][i]["id"] + "</td>" +
-                "<td>" + json[selectKey][i]["nombre"] + "</td>" +
-                "<td>" + json[selectKey][i]["curso"] + "</td>" +
-                "<td>" +
-                "<li>"+nota[0]["asignatura"]+" - "+nota[0]["nota"]+"</li>"+
-                "<li>"+nota[1]["asignatura"]+" - "+nota[1]["nota"]+"</li>"+
-                "<li>"+nota[2]["asignatura"]+" - "+nota[2]["nota"]+"</li>"+
-                "<li>"+nota[3]["asignatura"]+" - "+nota[3]["nota"]+"</li>"+
-                "<li>"+nota[4]["asignatura"]+" - "+nota[4]["nota"]+"</li>"+
-                "<li>"+nota[5]["asignatura"]+" - "+nota[5]["nota"]+"</li>"+
-                "</td>"+
-                "<td>"+
-                "<li>"+calificaciones(nota[0]["nota"]) +"</li>"+
-                "<li>"+calificaciones(nota[1]["nota"]) +"</li>"+
-                "<li>"+calificaciones(nota[2]["nota"]) +"</li>"+
-                "<li>"+calificaciones(nota[3]["nota"]) +"</li>"+
-                "<li>"+calificaciones(nota[4]["nota"]) +"</li>"+
-                "<li>"+calificaciones(nota[5]["nota"]) +"</li>"+
-                "</td>"+
-                "<td>"+ calcularMedia(arrayNotas) +"</td>"
-                select.appendChild(fila);
-        }
-    }
-}
+    let alumnos = json.Alumnos
 
+    for (const alumnosKey in alumnos) {
+
+        let fila = document.createElement("tr")
+        let notas = alumnos[alumnosKey].notas
+        let arrayNotas = []
+
+        for (const NotasKey in notas) {
+            arrayNotas.push(notas[NotasKey].nota)
+        }
+
+        fila.innerHTML=
+            "<td>"+alumnos[alumnosKey].id +"</td>"+
+            "<td>"+alumnos[alumnosKey].nombre +"</td>"+
+            "<td>"+alumnos[alumnosKey].curso +"</td>"+
+            "<td>"+
+            "<li>"+notas[0].asignatura+" - "+notas[0].nota+"</li>"+
+            "<li>"+notas[1].asignatura+" - "+notas[1].nota+"</li>"+
+            "<li>"+notas[2].asignatura+" - "+notas[2].nota+"</li>"+
+            "<li>"+notas[3].asignatura+" - "+notas[3].nota+"</li>"+
+            "<li>"+notas[4].asignatura+" - "+notas[4].nota+"</li>"+
+            "<li>"+notas[5].asignatura+" - "+notas[5].nota+"</li>"+
+            "</td>"+
+            "<td>"+
+            "<li>"+calificaciones(notas[0].nota)+"</li>"+
+            "<li>"+calificaciones(notas[1].nota)+"</li>"+
+            "<li>"+calificaciones(notas[2].nota)+"</li>"+
+            "<li>"+calificaciones(notas[3].nota)+"</li>"+
+            "<li>"+calificaciones(notas[4].nota)+"</li>"+
+            "<li>"+calificaciones(notas[5].nota)+"</li>"+
+            "</td>"+
+            "<td>"+calcularMedia(arrayNotas)+"</td>"
+        select.appendChild(fila)
+    }
+
+}
