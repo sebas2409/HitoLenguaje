@@ -1,5 +1,5 @@
 body{
-    background-image: url("../images/image.png");
+    background: url("../images/image.png") fixed center;
     margin: 10px;
 }
 h1,th{
